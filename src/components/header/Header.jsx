@@ -1,18 +1,90 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './Header.module.scss';
+import { FaShoppingCart, FaBars } from 'react-icons/fa'
+import { HiOutlineMenuAlt3 } from 'react-icons/hi'
+
+const logo = (
+    <div className={styles.logo}>
+        <Link to="/">
+            <h2>
+                e<span>Shop</span>.
+            </h2>
+        </Link>
+    </div>
+);
+
+const cart = (
+    <span className={styles.cart}>
+        <Link to="/cart">
+            Cart
+            <FaShoppingCart size={20} />
+            <p>0</p>
+        </Link>
+    </span>
+);
 
 const Header = () => {
+    const [showMenu, setShowMenu] = useState(false);
+
+    const toggleMenu = () => {
+        setShowMenu(!showMenu)
+    };
+
+    const hideMenu = () => {
+        setShowMenu(false)
+    };
+
     return (
         <header>
-            <div className={styles.header}>
-                <div className={styles.logo}>
-                    <Link to="/">
-                        <h2>
-                            e<span>Shop</span>.
-                        </h2>
-                    </Link>
+            <div className={styles.header} style={{ border: "1px solid red" }}>
+                {logo}
+
+                <nav className={showMenu
+                    ? `${styles["show-nav"]}`
+                    : `${styles["hide-nav"]}`}
+                >
+                    <div className={
+                        showMenu
+                            ? `${styles["nav-swapper"]} ${styles
+                            ["show-nav-swapper"]}`
+                            : `${styles["nav-swapper"]}`}
+                        onClick={hideMenu}
+                    >
+                    </div>
+
+                    <ul>
+                        <li>
+                            <Link to="/">
+                                Hone
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to="/contact">
+                                Contact Us
+                            </Link>
+                        </li>
+
+                    </ul>
+                    <div className={styles["header-right"]}>
+                        <span className={styles.links}>
+                            <Link to="/login">Login</Link>
+                            <Link to="/register">Rigister</Link>
+                            <Link to="/order-history">My Orders</Link>
+                        </span>
+                        {cart}
+                    </div>
+
+                </nav>
+
+
+
+                <div className={styles["menu-icon"]}>
+                    {cart}
+                    <HiOutlineMenuAlt3 size={28} onClick={toggleMenu} />
+
                 </div>
+
             </div>
         </header>
     );
