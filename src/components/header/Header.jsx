@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import styles from './Header.module.scss';
-import { FaShoppingCart, FaBars } from 'react-icons/fa'
+import { FaShoppingCart, FaTimes } from 'react-icons/fa'
 import { HiOutlineMenuAlt3 } from 'react-icons/hi'
+
 
 const logo = (
     <div className={styles.logo}>
@@ -24,6 +25,9 @@ const cart = (
     </span>
 );
 
+const activeLink = ({ isActive }) =>
+    (isActive ? `${styles.active}` : "")
+
 const Header = () => {
     const [showMenu, setShowMenu] = useState(false);
 
@@ -37,7 +41,7 @@ const Header = () => {
 
     return (
         <header>
-            <div className={styles.header} style={{ border: "1px solid red" }}>
+            <div className={styles.header}>
                 {logo}
 
                 <nav className={showMenu
@@ -53,40 +57,47 @@ const Header = () => {
                     >
                     </div>
 
-                    <ul>
-                        <li>
-                            <Link to="/">
-                                Hone
-                            </Link>
+                    <ul onClick={hideMenu}>
+                        <li className={styles["logo-mobile"]}>
+                            {logo}
+                            <FaTimes size={22} color="fff" onClick={hideMenu} />
                         </li>
                         <li>
-                            <Link to="/contact">
+                            <NavLink
+                                to="/"
+                                className={activeLink}
+                            >
+                                Hone
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink
+                                to="/contact"
+                                className={activeLink}
+                            >
                                 Contact Us
-                            </Link>
+                            </NavLink>
                         </li>
 
                     </ul>
-                    <div className={styles["header-right"]}>
+                    <div className={styles["header-right"]} onClick={hideMenu}>
                         <span className={styles.links}>
-                            <Link to="/login">Login</Link>
-                            <Link to="/register">Rigister</Link>
-                            <Link to="/order-history">My Orders</Link>
+                            <NavLink to="/login">Login</NavLink>
+                            <NavLink to="/register">Rigister</NavLink>
+                            <NavLink to="/order-history">My Orders</NavLink>
                         </span>
                         {cart}
                     </div>
 
                 </nav>
 
-
-
                 <div className={styles["menu-icon"]}>
                     {cart}
                     <HiOutlineMenuAlt3 size={28} onClick={toggleMenu} />
-
                 </div>
 
             </div>
-        </header>
+        </header >
     );
 };
 
