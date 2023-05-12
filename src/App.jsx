@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Home, Contact, Login, Register, Reset } from './pages';
 // Components
 import { Header, Footer } from './components';
+import { ToastContainer } from 'react-toastify';
 
 function App() {
 
@@ -10,6 +11,7 @@ function App() {
   return (
     <>
       <BrowserRouter>
+        <ToastContainer />
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />
